@@ -12,10 +12,11 @@ public class ToyLanguage {
     private ArrayList<String> Tokens = new ArrayList<String>();
     private ArrayList<Integer> values = new ArrayList<Integer>();
 
-    public ExpEvaluator(String s){
+    public ToyLanguage(String s){
         this.s = s;
         currIndex = 0;
         n = s.length();
+        System.out.println(s);
         //nextToken();
     }
     void nextIdenfier(){
@@ -235,9 +236,23 @@ public class ToyLanguage {
     
 }
 
-     public static void main(String []args){
-         ExpEvaluator ee = new ExpEvaluator("x = 1;\ny = 2;\nz = ---(x+(y+10));");
-         ee.eval();
+     public static void main(String []args)throws IOException{
+         if(args.length > 0) {
+            File file = new File(args[0]);
+            BufferedReader br = new BufferedReader(new FileReader(file)); 
+            StringBuilder sb = new StringBuilder(); 
+            String line = br.readLine(); 
+            while (line != null) { sb.append(line).append("\n"); 
+            line = br.readLine(); } 
+            String fileAsString = sb.toString();
+            StringBuilder builder = new StringBuilder(fileAsString);
+            builder.deleteCharAt(fileAsString.length() - 1);
+            ToyLanguage ee = new ToyLanguage(builder.toString());
+            ee.eval();
+            }
+            
+            
+         
      }
 }
 
